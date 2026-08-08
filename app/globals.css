@@ -1,26 +1,73 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Shared Webify accent family — teal on near-black */
+  --color-estate-teal: #0f4c5c;
+  --color-estate-steel: #1a2b3d;
+
+  /* Page background from the hero onward. The hero itself stays pure black so
+     the frame sequence sits on true black. */
+  --color-estate-charcoal: #141416;
+
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-estate-charcoal font-sans text-white antialiased;
+}
+
+/* Thin hairline used to separate sections without a hard border */
+.estate-rule {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.09) 20%,
+    rgba(255, 255, 255, 0.09) 80%,
+    transparent
+  );
+}
+
+@keyframes estate-cta-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.35), 0 0 24px rgba(15, 76, 92, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(20, 184, 166, 0), 0 0 46px rgba(15, 76, 92, 0.75);
+  }
+}
+.estate-cta-pulse {
+  animation: estate-cta-pulse 3.2s ease-in-out infinite;
+}
+
+/* Scroll hint under the hero */
+@keyframes estate-scroll-hint {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 0.8;
+  }
+}
+.estate-scroll-hint {
+  animation: estate-scroll-hint 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .estate-cta-pulse,
+  .estate-scroll-hint {
+    animation: none !important;
+  }
 }
